@@ -27,8 +27,7 @@
   <div id="messages">Loading entries...</div>
 
   <script>
-    // ⚠️ REPLACE THESE VALUES WITH YOUR ACTUAL SUPABASE KEYS FROM STEP 1
-    const SUPABASE_URL = "https://icvkwtiexncitfpymmqm.supabase.co";
+    const SUPABASE_URL = "https://supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_lza6AX0wSCdy-5jG_Fu4ug_Gg0yvIa7";
 
     const supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -44,6 +43,11 @@
 
       if (error) {
         messagesDiv.innerText = "Error loading entries.";
+        return;
+      }
+
+      if (data.length === 0) {
+        messagesDiv.innerText = "No entries yet. Be the first to sign!";
         return;
       }
 
