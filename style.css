@@ -255,33 +255,54 @@ button[type="submit"]:active { transform: scale(0.98); }
   100% { box-shadow: 0 0 0 0 rgba(197, 168, 128, 0); }
 }
 
-/* 📱 MOBILE RESPONSIVE OVERRIDES (Triggers on phone displays) */
+/* 📱 MOBILE RESPONSIVE OVERRIDES */
 @media (max-width: 650px) {
   body {
-    padding: 80px 16px 40px 16px; 
+    /* 1. We replace the full screen background image with a soft solid tint */
+    background-image: none;
+    background-color: #fdfbf7; 
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* 2. We inject the couple's photo as a dedicated visual card right at the top */
+  body::before {
+    content: "";
+    position: relative; /* Removes it from blocking the full screen */
+    display: block;
+    width: 100%;
+    height: 280px;      /* Gives them a dedicated, unblocked viewing window */
+    background-image: url("background.jpg");
+    background-size: cover;
+    background-position: center 20%; /* Adjusts focus to frame their faces perfectly */
+    border-radius: 16px;
+    margin-bottom: 24px;
+    z-index: 1;
   }
 
   header {
-    align-items: center; 
     text-align: center;
-    margin: 0 auto 30px auto; 
+    margin: 0 auto 24px auto; 
     max-width: 100%;
   }
 
   h1 {
-    font-size: 2.1rem; 
+    font-size: 1.8rem; /* Shrinks the text slightly so it fits neatly without bad breaks */
     text-align: center;
   }
 
   .subtitle {
     text-align: center;
-    padding-left: 0; 
-    font-size: 1rem;
+    font-size: 0.95rem;
+    margin-top: 6px;
   }
 
   form, #messages, .divider {
-    margin: 0 auto 24px auto; 
+    margin: 0 auto 20px auto; 
     max-width: 100%;
+    width: 100%;
   }
 
   .audio-toggle-btn {
