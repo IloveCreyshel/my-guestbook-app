@@ -15,7 +15,7 @@ body {
   font-family: 'Playfair Display', 'Inter', system-ui, sans-serif;
   background-image: url("background.jpg");
   background-size: cover;
-  background-position: center;
+  background-position: 65% center;
   background-attachment: fixed;
   background-repeat: no-repeat;
   color: var(--text-main);
