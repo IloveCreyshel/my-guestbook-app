@@ -33,12 +33,12 @@ body::before {
   z-index: -1;
 }
 
-/* 💻 DESKTOP RULES (Default) */
+/* 💻 DESKTOP RULES (Centered Preview Configuration) */
 header {
   display: block; 
-  max-width: 500px;    /* 1. Changed to 500px to match your form & message card widths exactly */
-  margin: 0 0 40px 60px; /* 2. Fixed the "40x" typo to "40px" so the layout computes correctly */
-  text-align: center;  /* 3. Centers multi-line wrapping boxes inside the header */
+  max-width: 500px;    
+  margin: 0 auto 40px auto; /* Centered: Cleared the 60px left push to balanced margins */
+  text-align: center;  
 }
 
 h1 {
@@ -49,7 +49,7 @@ h1 {
   color: #2b2420;
   text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
   line-height: 1.2; 
-  text-align: center;  /* 4. Changed from left to center to center the Title letters */
+  text-align: center;  
 }
 
 .subtitle {
@@ -58,7 +58,7 @@ h1 {
   font-style: italic; 
   font-weight: 600;
   text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8);
-  text-align: center;  /* 5. Changed from left to center to center the Subtitle letters */
+  text-align: center;  
   width: 100%;
   padding-left: 0; 
 }
@@ -102,7 +102,7 @@ form {
   padding: 28px;
   border-radius: 16px;
   max-width: 500px; 
-  margin: 0 0 40px 60px; 
+  margin: 0 auto 40px auto; /* Centered: Cleared the 60px left push to balanced margins */
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -167,7 +167,7 @@ button[type="submit"]:active { transform: scale(0.98); }
   max-width: 500px;
   height: 1px;
   background: linear-gradient(to right, var(--border-color), transparent); 
-  margin: 0 0 40px 60px; 
+  margin: 0 auto 40px auto; /* Centered: Cleared the 60px left push to balanced margins */
 }
 
 #messages {
@@ -175,7 +175,7 @@ button[type="submit"]:active { transform: scale(0.98); }
   flex-direction: column;
   gap: 16px;
   max-width: 500px;
-  margin: 0 0 0 60px; 
+  margin: 0 auto 0 auto; /* Centered: Cleared the 60px left push to balanced margins */
 }
 
 .msg-card {
@@ -258,29 +258,29 @@ button[type="submit"]:active { transform: scale(0.98); }
 /* 📱 MOBILE RESPONSIVE OVERRIDES (Triggers on phone displays) */
 @media (max-width: 650px) {
   body {
-    padding: 80px 16px 40px 16px; /* Optimized mobile padding */
+    padding: 80px 16px 40px 16px; 
   }
 
   header {
-    align-items: center; /* Centers the alignment on mobile views */
+    align-items: center; 
     text-align: center;
-    margin: 0 auto 30px auto; /* Removes the 60px left push */
+    margin: 0 auto 30px auto; 
     max-width: 100%;
   }
 
   h1 {
-    font-size: 2.1rem; /* Slightly smaller to prevent bad breaks on mobile */
+    font-size: 2.1rem; 
     text-align: center;
   }
 
   .subtitle {
     text-align: center;
-    padding-left: 0; /* Clear desktop indentation offset on mobile */
+    padding-left: 0; 
     font-size: 1rem;
   }
 
   form, #messages, .divider {
-    margin: 0 auto 24px auto; /* Centers forms and tables perfectly on mobile */
+    margin: 0 auto 24px auto; 
     max-width: 100%;
   }
 
