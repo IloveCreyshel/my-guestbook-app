@@ -51,15 +51,17 @@ h1 {
   text-align: left; /* ↖️ Aligns title text left */
 }
 
-subtitle {
+.subtitle {
   color: #3d332b;
   font-size: 1.1rem;
-  font-style: italic;
+  font-style: italic; /* ✍️ Ensures the subtitle text is completely italicized */
   font-weight: 600;
   text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8);
-  text-align: left; /* ↖️ Aligns subtitle text perfectly left */
+  text-align: left;
   width: 100%;
+  padding-left: 52px; /* ➡️ Adjusts this text block right to match the text layout perfectly */
 }
+
 
 
 .audio-toggle-btn {
