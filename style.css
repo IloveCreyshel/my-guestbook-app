@@ -35,10 +35,10 @@ body::before {
 
 /* 💻 DESKTOP RULES (Default) */
 header {
-  display: block; /* Snap to a standard text container block */
-  max-width: 400px; /* Matches the exact width of your forms perfectly */
-  margin: 0 0 40x 60px; /* Aligns the box left layout with your form container spacing */
-  text-align: center; /* ↖️ Forces all multi-line text to align flush along the left edge */
+  display: block; 
+  max-width: 500px;    /* 1. Changed to 500px to match your form & message card widths exactly */
+  margin: 0 0 40px 60px; /* 2. Fixed the "40x" typo to "40px" so the layout computes correctly */
+  text-align: center;  /* 3. Centers multi-line wrapping boxes inside the header */
 }
 
 h1 {
@@ -48,8 +48,8 @@ h1 {
   margin-bottom: 12px;
   color: #2b2420;
   text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
-  line-height: 1.2; /* Prevents crowded line spacing when the title wraps */
-  text-align: left; /* ↖️ Keeps the title lines left-aligned */
+  line-height: 1.2; 
+  text-align: center;  /* 4. Changed from left to center to center the Title letters */
 }
 
 .subtitle {
@@ -58,9 +58,9 @@ h1 {
   font-style: italic; 
   font-weight: 600;
   text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8);
-  text-align: left; /* ↖️ Keeps your wedding wish text left-aligned */
+  text-align: center;  /* 5. Changed from left to center to center the Subtitle letters */
   width: 100%;
-  padding-left: 0; /* Removed the old desktop padding offset so it aligns exactly flush below your letters */
+  padding-left: 0; 
 }
 
 .audio-toggle-btn {
