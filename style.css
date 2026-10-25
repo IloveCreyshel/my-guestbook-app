@@ -15,14 +15,16 @@ body {
   font-family: 'Playfair Display', 'Inter', system-ui, sans-serif;
   background-image: url("background.jpg");
   background-size: cover;
-  background-position: center; 
   background-attachment: fixed;
   background-repeat: no-repeat;
   color: var(--text-main);
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  padding: 60px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Default fallback is centered (good for mobile) */
+  padding: 60px 16px;
 }
 
 body::before {
@@ -33,16 +35,17 @@ body::before {
   z-index: -1;
 }
 
-/* 💻 DESKTOP RULES (Centered Preview Configuration) */
+/* 📱 MOBILE GENERAL BASE STYLING (Centered Layout Elements) */
 header {
   display: block; 
-  max-width: 500px;    
-  margin: 0 auto 40px auto; /* Centered: Cleared the 60px left push to balanced margins */
+  max-width: 100%;
+  width: 500px;
+  margin: 0 auto 32px auto;  
   text-align: center;  
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2.1rem;
   font-weight: 700;
   letter-spacing: -0.01em;
   margin-bottom: 12px;
@@ -54,44 +57,12 @@ h1 {
 
 .subtitle {
   color: #3d332b;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-style: italic; 
   font-weight: 600;
   text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8);
   text-align: center;  
   width: 100%;
-  padding-left: 0; 
-}
-
-.audio-toggle-btn {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 100;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 12px 16px;
-  border-radius: 50px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 12px rgba(140, 118, 101, 0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: all 0.3s ease;
-}
-
-.audio-toggle-btn:hover {
-  transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.8);
-}
-
-.audio-pulse {
-  animation: pulseGlow 2s infinite;
 }
 
 form {
@@ -99,10 +70,11 @@ form {
   border: 1px solid var(--border-color);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  padding: 28px;
+  padding: 24px;
   border-radius: 16px;
-  max-width: 500px; 
-  margin: 0 auto 40px auto; /* Centered: Cleared the 60px left push to balanced margins */
+  max-width: 100%; 
+  width: 500px;
+  margin: 0 auto 32px auto; 
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -164,18 +136,20 @@ button[type="submit"]:hover { background: var(--primary-hover); }
 button[type="submit"]:active { transform: scale(0.98); }
 
 .divider {
-  max-width: 500px;
+  max-width: 100%;
+  width: 500px;
   height: 1px;
   background: linear-gradient(to right, var(--border-color), transparent); 
-  margin: 0 auto 40px auto; /* Centered: Cleared the 60px left push to balanced margins */
+  margin: 0 auto 32px auto; 
 }
 
 #messages {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 500px;
-  margin: 0 auto 0 auto; /* Centered: Cleared the 60px left push to balanced margins */
+  max-width: 100%;
+  width: 500px;
+  margin: 0 auto; 
 }
 
 .msg-card {
@@ -212,6 +186,37 @@ button[type="submit"]:active { transform: scale(0.98); }
   font-size: 1rem;
   white-space: pre-wrap;
   font-weight: 500;
+}
+
+.audio-toggle-btn {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px 12px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(140, 118, 101, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.audio-toggle-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.audio-pulse {
+  animation: pulseGlow 2s infinite;
 }
 
 .loading-text, .empty-text {
@@ -255,60 +260,51 @@ button[type="submit"]:active { transform: scale(0.98); }
   100% { box-shadow: 0 0 0 0 rgba(197, 168, 128, 0); }
 }
 
-/* 📱 MOBILE RESPONSIVE OVERRIDES */
-@media (max-width: 650px) {
-  body {
-    /* 1. We replace the full screen background image with a soft solid tint */
-    background-image: none;
-    background-color: #fdfbf7; 
-    padding: 20px 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
 
-  /* 2. We inject the couple's photo as a dedicated visual card right at the top */
-  body::before {
-    content: "";
-    position: relative; /* Removes it from blocking the full screen */
-    display: block;
-    width: 100%;
-    height: 280px;      /* Gives them a dedicated, unblocked viewing window */
-    background-image: url("background.jpg");
-    background-size: cover;
-    background-position: center 20%; /* Adjusts focus to frame their faces perfectly */
-    border-radius: 16px;
-    margin-bottom: 24px;
-    z-index: 1;
+/* 💻 PC / DESKTOP RESPONSIVE CONFIGURATION (Triggers only on computers) */
+@media (min-width: 768px) {
+  body {
+    background-position: calc(50% + 220px) center; /* Anchors the couple photo smoothly out from under the boxes */
+    align-items: flex-start; /* Aligns all columns strictly to the left axis */
+    padding: 60px 0 60px max(50px, 5%); /* Left padding buffer keeps blocks safe from touching the screen's left edge */
   }
 
   header {
-    text-align: center;
-    margin: 0 auto 24px auto; 
-    max-width: 100%;
+    max-width: 500px;
+    margin: 0 0 32px 0; /* Left spacing is handled by the parent body layout padding */
+    text-align: center; /* Keeps header content center indented inside the 500px boundaries */
   }
 
   h1 {
-    font-size: 1.8rem; /* Shrinks the text slightly so it fits neatly without bad breaks */
+    font-size: 2.5rem;
     text-align: center;
   }
 
   .subtitle {
+    font-size: 1.1rem;
     text-align: center;
-    font-size: 0.95rem;
-    margin-top: 6px;
   }
 
-  form, #messages, .divider {
-    margin: 0 auto 20px auto; 
-    max-width: 100%;
-    width: 100%;
+  form {
+    padding: 28px;
+    max-width: 500px;
+    margin: 0 0 32px 0;
+  }
+
+  .divider {
+    max-width: 500px;
+    margin: 0 0 32px 0;
+  }
+
+  #messages {
+    max-width: 500px;
+    margin: 0;
   }
 
   .audio-toggle-btn {
-    top: 15px;
-    right: 15px;
-    padding: 8px 12px;
-    font-size: 0.8rem;
+    top: 20px;
+    right: 20px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
   }
 }
