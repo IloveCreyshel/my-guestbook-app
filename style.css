@@ -37,8 +37,9 @@ body::before {
 header {
   display: block; /* Snap to a standard text container block */
   max-width: 500px; /* Matches the exact width of your forms perfectly */
-  margin: 0 0 40px 60px; /* Aligns the box left layout with your form container spacing */
+  margin: 0 0 40x 60px; /* Aligns the box left layout with your form container spacing */
   text-align: left; /* ↖️ Forces all multi-line text to align flush along the left edge */
+  transform: translateX(30px);
 }
 
 h1 {
