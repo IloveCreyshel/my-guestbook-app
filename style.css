@@ -34,9 +34,11 @@ body::before {
 }
 
 header {
-  text-align: left; /* ↖️ Moved title text to the left column */
-  max-width: 500px; /* Matches form width for a clean uniform look */
-  margin: 0 0 40px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* ↖️ Forces all elements inside the header to align tightly to the left */
+  max-width: 500px; /* Matches the exact width of your input forms */
+  margin: 0 0 40px 60px; 
 }
 
 h1 {
@@ -46,6 +48,7 @@ h1 {
   margin-bottom: 8px;
   color: #2b2420;
   text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
+  text-align: left; /* ↖️ Aligns title text left */
 }
 
 .subtitle {
@@ -54,7 +57,10 @@ h1 {
   font-style: italic;
   font-weight: 600;
   text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8);
+  text-align: left; /* ↖️ Aligns subtitle text perfectly left */
+  width: 100%;
 }
+
 
 .audio-toggle-btn {
   position: fixed;
