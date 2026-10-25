@@ -5,16 +5,9 @@
 })(this, (function (exports) { 'use strict';
 
     class SupabaseClient {
-        constructor(supabaseUrl, supabaseKey, options = {}) {
+        constructor(supabaseUrl, supabaseKey) {
             this.supabaseUrl = supabaseUrl;
             this.supabaseKey = supabaseKey;
-            const headers = Object.assign({
-                'X-Client-Info': 'supabase-js/2.46.1',
-                Authorization: `Bearer ${supabaseKey}`,
-                apikey: supabaseKey
-            }, options.headers);
-            
-            this.auth = { signOut: async () => ({ error: null }) };
             this.restUrl = `${supabaseUrl}/rest/v1`;
         }
 
@@ -39,17 +32,13 @@
                     return builder;
                 },
                 insert: async (values) => {
-                    try {
-                        const res = await fetch(url, {
-                            method: 'POST',
-                            headers: headers,
-                            body: JSON.stringify(values)
-                        });
-                        if (!res.ok) return { data: null, error: await res.json() };
-                        return { data: await res.json(), error: null };
-                    } catch (err) {
-                        return { data: null, error: err };
-                    }
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify(values)
+                    });
+                    if (!res.ok) return { data: null, error: await res.json() };
+                    return { data: await res.json(), error: null };
                 },
                 then: async (onfulfilled) => {
                     try {
@@ -66,13 +55,11 @@
         }
     }
 
-    function createClient(supabaseUrl, supabaseKey, options) {
-        return new SupabaseClient(supabaseUrl, supabaseKey, options);
+    function createClient(supabaseUrl, supabaseKey) {
+        return new SupabaseClient(supabaseUrl, supabaseKey);
     }
 
     exports.SupabaseClient = SupabaseClient;
     exports.createClient = createClient;
-
     Object.defineProperty(exports, '__esModule', { value: true });
-
 }));
