@@ -12,19 +12,18 @@
   <!-- Floating Professional Emoji Layer Container -->
   <div class="emoji-container" id="emoji-layer"></div>
 
+  <!-- 🔊 Minimal Hidden Audio Element & Floating Action Button -->
+  <audio id="bg-audio" loop>
+    <source src="wedding.mp3" type="audio/mpeg">
+  </audio>
+  <button id="audio-btn" class="audio-toggle-btn audio-pulse" onclick="toggleAudio()">
+    <span id="audio-icon">🔇</span> <span id="audio-text">Muted</span>
+  </button>
+
   <header>
     <h1>✨ Wedding Guestbook ✨</h1>
     <p class="subtitle">Leave a short message for the wedding couple!</p>
   </header>
-
-  <!-- 🎵 MUSIC ELEMENT SPACE: Just swap the placeholder link with your audio file link! -->
-  <div class="music-player-container">
-    <div class="music-title">🎵 Background Music</div>
-    <audio controls loop>
-      <source src="wedding.mp3" type="audio/mpeg">
-      Your web browser does not support the audio streaming element.
-    </audio>
-  </div>
   
   <form id="guestbook-form">
     <div class="form-group">
@@ -45,12 +44,16 @@
   </div>
 
   <script>
-    const SUPABASE_URL = "https://icvkwtiexncitfpymmqm.supabase.co";
+    const SUPABASE_URL = "https://supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_lza6AX0wSCdy-5jG_Fu4ug_Gg0yvIa7";
 
     const supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const form = document.getElementById('guestbook-form');
     const messagesDiv = document.getElementById('messages');
+    const audio = document.getElementById('bg-audio');
+    const audioBtn = document.getElementById('audio-btn');
+    const audioIcon = document.getElementById('audio-icon');
+    const audioText = document.getElementById('audio-text');
 
     async function loadMessages() {
       const { data, error } = await supabase
@@ -110,18 +113,16 @@
       return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
-    // Professional dynamic floating layout script
     function generateFloatingEmojis() {
       const layer = document.getElementById('emoji-layer');
-      const emojiTypes = ['💕', '💍', '✨', '🌸', '🥂'];
-      const maxCount = 15; // Kept low to keep presentation clean, lightweight, and professional
+      const emojiTypes = ['`💕`', '`💍`', '`✨`', '`🌸`', '`🥂`'];
+      const maxCount = 15;
 
       for (let i = 0; i < maxCount; i++) {
         const emojiElement = document.createElement('div');
         emojiElement.className = 'floating-emoji';
-        emojiElement.innerText = emojiTypes[Math.floor(Math.random() * emojiTypes.length)];
+        emojiElement.innerText = emojiTypes[Math.floor(Math.random() * emojiTypes.length)].replace(/`/g, '');
         
-        // Randomize placement vectors
         emojiElement.style.left = `${Math.random() * 100}%`;
         emojiElement.style.animationDelay = `${Math.random() * 6}s`;
         emojiElement.style.fontSize = `${Math.random() * (26 - 16) + 16}px`;
@@ -130,8 +131,37 @@
       }
     }
 
-    loadMessages();
-    generateFloatingEmojis();
+    // 🔊 Smart Background Streaming & Interaction Controller
+    function toggleAudio() {
+      if (audio.paused) {
+        audio.play().then(() => {
+          audioIcon.innerText = "🔊";
+          audioText.innerText = "Playing";
+          audioBtn.classList.remove('audio-pulse');
+        }).catch(err => console.log("Audio play blocked by browser setup rules."));
+      } else {
+        audio.pause();
+        audioIcon.innerText = "🔇";
+        audioText.innerText = "Muted";
+        audioBtn.classList.add('audio-pulse');
+      }
+    }
+
+    // Attempt an instant silent auto-play stream loop upon entry
+    window.addEventListener('DOMContentLoaded', () => {
+      loadMessages();
+      generateFloatingEmojis();
+      
+      // Auto-play attempt handler
+      audio.play().then(() => {
+        audioIcon.innerText = "🔊";
+        audioText.innerText = "Playing";
+        audioBtn.classList.remove('audio-pulse');
+      }).catch(() => {
+        // If modern security forces a initial mute state, let the button show its active call-to-action pulse
+        console.log("Autoplay caught by browser sandbox permissions. User click is required.");
+      });
+    });
   </script>
 </body>
 </html>
