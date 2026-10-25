@@ -35,21 +35,21 @@ body::before {
 
 /* 💻 DESKTOP RULES (Default) */
 header {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; 
-  max-width: 500px; 
-  margin: 0 0 40px 60px; 
+  display: block; /* Snap to a standard text container block */
+  max-width: 500px; /* Matches the exact width of your forms perfectly */
+  margin: 0 0 40px 60px; /* Aligns the box left layout with your form container spacing */
+  text-align: left; /* ↖️ Forces all multi-line text to align flush along the left edge */
 }
 
 h1 {
   font-size: 2.5rem;
   font-weight: 700;
   letter-spacing: -0.01em;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   color: #2b2420;
   text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
-  text-align: left;
+  line-height: 1.2; /* Prevents crowded line spacing when the title wraps */
+  text-align: left; /* ↖️ Keeps the title lines left-aligned */
 }
 
 .subtitle {
@@ -58,9 +58,9 @@ h1 {
   font-style: italic; 
   font-weight: 600;
   text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8);
-  text-align: left;
+  text-align: left; /* ↖️ Keeps your wedding wish text left-aligned */
   width: 100%;
-  padding-left: 52px; /* Flushes nicely below "W" on Desktop */
+  padding-left: 0; /* Removed the old desktop padding offset so it aligns exactly flush below your letters */
 }
 
 .audio-toggle-btn {
