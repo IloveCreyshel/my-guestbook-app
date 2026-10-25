@@ -12,7 +12,7 @@
 
 body {
   font-family: 'Playfair Display', 'Inter', system-ui, sans-serif;
-  background-image: url("YOUR_BACKGROUND_IMAGE_URL_HERE"); /* 🖼️ PLACE YOUR BACKGROUND IMAGE LINK HERE */
+  background-image: url("background.jpeg"); /* 🖼️ PLACE YOUR BACKGROUND IMAGE LINK HERE */
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
