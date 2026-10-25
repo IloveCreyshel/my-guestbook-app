@@ -51,11 +51,11 @@ h1 {
   text-align: left; /* ↖️ Aligns title text left */
 }
 
-.subtitle {
+subtitle {
   color: #3d332b;
   font-size: 1.1rem;
   font-style: italic;
-  font-weight: 600;
+  font-weight: 700;
   text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8);
   text-align: left; /* ↖️ Aligns subtitle text perfectly left */
   width: 100%;
