@@ -33,12 +33,12 @@ body::before {
   z-index: -1;
 }
 
-/* 💻 DESKTOP RULES (Centered Preview Configuration) */
+/* 💻 DESKTOP RULES (Default) */
 header {
   display: block; 
-  max-width: 500px;    
-  margin: 0 auto 40px auto; /* Centered: Cleared the 60px left push to balanced margins */
-  text-align: center;  
+  max-width: 500px;    /* 1. Changed to 500px to match your form & message card widths exactly */
+  margin: 0 0 40px 60px; /* 2. Fixed the "40x" typo to "40px" so the layout computes correctly */
+  text-align: center;  /* 3. Centers multi-line wrapping boxes inside the header */
 }
 
 h1 {
@@ -49,7 +49,7 @@ h1 {
   color: #2b2420;
   text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
   line-height: 1.2; 
-  text-align: center;  
+  text-align: center;  /* 4. Changed from left to center to center the Title letters */
 }
 
 .subtitle {
@@ -58,7 +58,7 @@ h1 {
   font-style: italic; 
   font-weight: 600;
   text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8);
-  text-align: center;  
+  text-align: center;  /* 5. Changed from left to center to center the Subtitle letters */
   width: 100%;
   padding-left: 0; 
 }
