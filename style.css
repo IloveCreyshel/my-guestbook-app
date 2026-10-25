@@ -1,5 +1,5 @@
 :root {
-  --bg-overlay: rgba(253, 251, 247, 0.22); /* 🖼️ Kept light for maximum photo visibility */
+  --bg-overlay: rgba(253, 251, 247, 0.22); 
   --card-bg: rgba(255, 255, 255, 0.45); 
   --input-bg: rgba(255, 255, 255, 0.35); 
   --border-color: rgba(226, 212, 201, 0.5); 
@@ -15,14 +15,14 @@ body {
   font-family: 'Playfair Display', 'Inter', system-ui, sans-serif;
   background-image: url("background.jpg");
   background-size: cover;
-  background-position: center; /* 🖼️ Reset to center since the containers are now moved left */
+  background-position: center; 
   background-attachment: fixed;
   background-repeat: no-repeat;
   color: var(--text-main);
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  padding: 60px 40px; /* Enhanced side padding for breathing room */
+  padding: 60px 24px;
 }
 
 body::before {
@@ -33,11 +33,12 @@ body::before {
   z-index: -1;
 }
 
+/* 💻 DESKTOP RULES (Default) */
 header {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* ↖️ Forces all elements inside the header to align tightly to the left */
-  max-width: 500px; /* Matches the exact width of your input forms */
+  align-items: flex-start; 
+  max-width: 500px; 
   margin: 0 0 40px 60px; 
 }
 
@@ -48,21 +49,19 @@ h1 {
   margin-bottom: 8px;
   color: #2b2420;
   text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
-  text-align: left; /* ↖️ Aligns title text left */
+  text-align: left;
 }
 
 .subtitle {
   color: #3d332b;
   font-size: 1.1rem;
-  font-style: italic; /* ✍️ Ensures the subtitle text is completely italicized */
+  font-style: italic; 
   font-weight: 600;
   text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8);
   text-align: left;
   width: 100%;
-  padding-left: 52px; /* ➡️ Adjusts this text block right to match the text layout perfectly */
+  padding-left: 52px; /* Flushes nicely below "W" on Desktop */
 }
-
-
 
 .audio-toggle-btn {
   position: fixed;
@@ -102,8 +101,8 @@ form {
   -webkit-backdrop-filter: blur(12px);
   padding: 28px;
   border-radius: 16px;
-  max-width: 500px; /* Slightly compacted for a sharper left-column feel */
-  margin: 0 0 40px 60px; /* ↖️ Completely removed right/center margins to snap left */
+  max-width: 500px; 
+  margin: 0 0 40px 60px; 
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -167,8 +166,8 @@ button[type="submit"]:active { transform: scale(0.98); }
 .divider {
   max-width: 500px;
   height: 1px;
-  background: linear-gradient(to right, var(--border-color), transparent); /* Custom fade for left layout */
-  margin: 0 0 40px 60px;
+  background: linear-gradient(to right, var(--border-color), transparent); 
+  margin: 0 0 40px 60px; 
 }
 
 #messages {
@@ -176,7 +175,7 @@ button[type="submit"]:active { transform: scale(0.98); }
   flex-direction: column;
   gap: 16px;
   max-width: 500px;
-  margin: 0 0 0 60px; /* ↖️ Snaps responses grid left */
+  margin: 0 0 0 60px; 
 }
 
 .msg-card {
@@ -254,4 +253,41 @@ button[type="submit"]:active { transform: scale(0.98); }
   0% { box-shadow: 0 0 0 0 rgba(197, 168, 128, 0.4); }
   70% { box-shadow: 0 0 0 10px rgba(197, 168, 128, 0); }
   100% { box-shadow: 0 0 0 0 rgba(197, 168, 128, 0); }
+}
+
+/* 📱 MOBILE RESPONSIVE OVERRIDES (Triggers on phone displays) */
+@media (max-width: 650px) {
+  body {
+    padding: 80px 16px 40px 16px; /* Optimized mobile padding */
+  }
+
+  header {
+    align-items: center; /* Centers the alignment on mobile views */
+    text-align: center;
+    margin: 0 auto 30px auto; /* Removes the 60px left push */
+    max-width: 100%;
+  }
+
+  h1 {
+    font-size: 2.1rem; /* Slightly smaller to prevent bad breaks on mobile */
+    text-align: center;
+  }
+
+  .subtitle {
+    text-align: center;
+    padding-left: 0; /* Clear desktop indentation offset on mobile */
+    font-size: 1rem;
+  }
+
+  form, #messages, .divider {
+    margin: 0 auto 24px auto; /* Centers forms and tables perfectly on mobile */
+    max-width: 100%;
+  }
+
+  .audio-toggle-btn {
+    top: 15px;
+    right: 15px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
 }
