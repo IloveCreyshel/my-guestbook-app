@@ -9,10 +9,22 @@
 </head>
 <body>
 
+  <!-- Floating Professional Emoji Layer Container -->
+  <div class="emoji-container" id="emoji-layer"></div>
+
   <header>
-    <h1>📖 Wedding Guestbook</h1>
+    <h1>✨ Wedding Guestbook ✨</h1>
     <p class="subtitle">Leave a short message for the wedding couple!</p>
   </header>
+
+  <!-- 🎵 MUSIC ELEMENT SPACE: Just swap the placeholder link with your audio file link! -->
+  <div class="music-player-container">
+    <div class="music-title">🎵 Background Music</div>
+    <audio controls loop>
+      <source src="YOUR_MUSIC_FILE_URL_HERE" type="audio/mpeg">
+      Your web browser does not support the audio streaming element.
+    </audio>
+  </div>
   
   <form id="guestbook-form">
     <div class="form-group">
@@ -21,7 +33,7 @@
     </div>
     <div class="form-group">
       <label for="message">Message</label>
-      <textarea id="message" placeholder="Write a message..." rows="4" required></textarea>
+      <textarea id="message" placeholder="Write a beautiful wedding wish..." rows="4" required></textarea>
     </div>
     <button type="submit">Sign Guestbook</button>
   </form>
@@ -98,7 +110,28 @@
       return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
+    // Professional dynamic floating layout script
+    function generateFloatingEmojis() {
+      const layer = document.getElementById('emoji-layer');
+      const emojiTypes = ['💕', '💍', '✨', '🌸', '🥂'];
+      const maxCount = 15; // Kept low to keep presentation clean, lightweight, and professional
+
+      for (let i = 0; i < maxCount; i++) {
+        const emojiElement = document.createElement('div');
+        emojiElement.className = 'floating-emoji';
+        emojiElement.innerText = emojiTypes[Math.floor(Math.random() * emojiTypes.length)];
+        
+        // Randomize placement vectors
+        emojiElement.style.left = `${Math.random() * 100}%`;
+        emojiElement.style.animationDelay = `${Math.random() * 6}s`;
+        emojiElement.style.fontSize = `${Math.random() * (26 - 16) + 16}px`;
+        
+        layer.appendChild(emojiElement);
+      }
+    }
+
     loadMessages();
+    generateFloatingEmojis();
   </script>
 </body>
 </html>
