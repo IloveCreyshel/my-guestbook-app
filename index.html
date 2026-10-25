@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Live Guestbook</title>
+  <script src="https://jsdelivr.net"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 500px; margin: 40px auto; padding: 0 20px; line-height: 1.5; }
+    form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
+    input, textarea, button { padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; }
+    button { background: #3ecf8e; color: white; border: none; cursor: pointer; font-weight: bold; }
+    .msg-card { background: #f9f9f9; padding: 15px; border-radius: 4px; margin-bottom: 10px; border-left: 4px solid #3ecf8e; }
+    .meta { font-size: 12px; color: #666; margin-top: 5px; }
+  </style>
+</head>
+<body>
+
+  <h1>📖 Public Guestbook</h1>
+  
+  <form id="guestbook-form">
+    <input type="text" id="name" placeholder="Your Name" required>
+    <textarea id="message" placeholder="Write a message..." rows="3" required></textarea>
+    <button type="submit">Sign Guestbook</button>
+  </form>
+
+  <div id="messages">Loading entries...</div>
+
+  <script>
+    // ⚠️ REPLACE THESE VALUES WITH YOUR ACTUAL SUPABASE KEYS FROM STEP 1
+    const SUPABASE_URL = "https://icvkwtiexncitfpymmqm.supabase.co/rest/v1/";
+    const SUPABASE_ANON_KEY = "sb_publishable_lza6AX0wSCdy-5jG_Fu4ug_Gg0yvIa7";
+
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const form = document.getElementById('guestbook-form');
+    const messagesDiv = document.getElementById('messages');
+
+    // 1. Fetch entries from Supabase database
+    async function loadMessages() {
+      const { data, error } = await supabase
+        .from('guestbook')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        messagesDiv.innerText = "Error loading entries.";
+        return;
+      }
+
+      messagesDiv.innerHTML = data.map(entry => `
+        <div class="msg-card">
+          <strong>${escapeHtml(entry.name)}</strong>
+          <p style="margin: 5px 0 0 0;">${escapeHtml(entry.message)}</p>
+          <div class="meta">${new Date(entry.created_at).toLocaleString()}</div>
+        </div>
+      `).join('');
+    }
+
+    // 2. Submit a new entry to Supabase database
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const message = document.getElementById('message').value;
+
+      const { error } = await supabase
+        .from('guestbook')
+        .insert([{ name, message }]);
+
+      if (!error) {
+        form.reset();
+        loadMessages(); // Refresh UI list
+      } else {
+        alert("Failed to submit entry!");
+      }
+    });
+
+    // Helper to prevent script injection
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    loadMessages();
+  </script>
+</body>
+</html>
