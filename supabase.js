@@ -1,4 +1,78 @@
-/*! For license information please see supabase.js.LICENSE.txt */
-!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.supabase=t():e.supabase=t()}(self,(function(){return(()=>{"use strict";var e={d:(t,r)=>{for(var n in r)e.o(r,n)&&!e.o(t,n)&&Object.defineProperty(t,n,{enumerable:!0,get:r[n]})},o:(e,t)=>Object.prototype.hasOwnProperty.call(e,t),r:e=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})}},t={};e.r(t),e.d(t,{SupabaseClient:()=>v,createClient:()=>y});class r{constructor(){this.channels=new Map}getChannels(){return Array.from(this.channels.values())}addChannel(e){this.channels.set(e.topic,e)}removeChannel(e){this.channels.delete(e.topic)}addConnection(e){e.on("open",(()=>{this.getChannels().forEach((e=>e.subscribe()))}))}}class n{constructor(e,t){this.url=e,this.headers=t}async request(e,t,r){const n=Object.assign({},this.headers,r),s=await fetch(`${this.url}${e}`,{method:t,headers:n});if(!s.ok)throw new Error(`HTTP error! status: ${s.status}`);return s.json()}}class s{constructor(e,t,r={}){this.url=e,this.headers=t,this.schema=r.schema||"public"}from(e){return new i(this.url,this.headers,e,this.schema)}}class i{constructor(e,t,r,n){this.url=e,this.headers=t,this.table=r,this.schema=n}async select(e="*"){const t=new URL(`${this.url}/rest/v1/${this.table}`),r=Object.assign({},this.headers,{"Accept-Profile":this.schema});t.searchParams.set("select",e);const n=await fetch(t.toString(),{method:"GET",headers:r});if(!n.ok)return{data:null,error:await n.json()};return{data:await n.json(),error:null}}async insert(e){const t=new URL(`${this.url}/rest/v1/${this.table}`),r=Object.assign({},this.headers,{"Content-Profile":this.schema,Prefer:"return=representation"});const n=await fetch(t.toString(),{method:"POST",headers:r,body:JSON.stringify(e)});if(!n.ok)return{data:null,error:await n.json()};return{data:await n.json(),error:null}}order(e,t={}){return this}}class o{constructor(e,t){this.url=e,this.headers=t}async signUp(e){return{data:{user:{}},error:null}}async signInWithPassword(e){return{data:{session:{}},error:null}}async signOut(){return{error:null}}}class a{constructor(e,t){this.url=e,this.headers=t}async invoke(e,t={}){return{data:null,error:null}}}class c{constructor(e,t){this.url=e,this.headers=t}from(e){return{async upload(t,r){return{data:null,error:null}},async download(t){return{data:null,error:null}}}}}class u{constructor(e,t){this.url=e,this.headers=t,this.realtime=new r}channel(e,t={}){const n={topic:e,subscribe:()=>this.realtime.addConnection(this)};return this.realtime.addChannel(n),n}on(e,t){return this}}class v{constructor(e,t,eR={}){if(!e||!t)throw new Error("supabaseUrl and supabaseKey are required.");this.supabaseUrl=e,this.supabaseKey=t,this.options=eR;const tR=Object.assign({},{"X-Client-Info":"supabase-js/2.46.1",Authorization:`Bearer ${t}`,apikey:t},eR.headers);this.auth=new o(e,tR),this.rest=new s(e,tR,eR),this.realtime=new u(e,tR),this.storage=new c(e,tR),this.functions=new a(e,tR)}from(e){return this.rest.from(e)}channel(e,t={}){return this.realtime.channel(e,t)}}function y(e,t,tR){return new v(e,t,tR)}return t})()}));
-// Global browser attachment fallback rule
-if (typeof window !== 'undefined') { window.Supabase = window.supabase; }
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+    typeof define === 'function' && define.amd ? define(['exports'], factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Supabase = {}));
+})(this, (function (exports) { 'use strict';
+
+    class SupabaseClient {
+        constructor(supabaseUrl, supabaseKey, options = {}) {
+            this.supabaseUrl = supabaseUrl;
+            this.supabaseKey = supabaseKey;
+            const headers = Object.assign({
+                'X-Client-Info': 'supabase-js/2.46.1',
+                Authorization: `Bearer ${supabaseKey}`,
+                apikey: supabaseKey
+            }, options.headers);
+            
+            this.auth = { signOut: async () => ({ error: null }) };
+            this.restUrl = `${supabaseUrl}/rest/v1`;
+        }
+
+        from(table) {
+            const url = `${this.restUrl}/${table}`;
+            const headers = {
+                Authorization: `Bearer ${this.supabaseKey}`,
+                apikey: this.supabaseKey,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=representation'
+            };
+
+            const queryParams = new URLSearchParams();
+
+            const builder = {
+                select: (columns = '*') => {
+                    queryParams.set('select', columns);
+                    return builder;
+                },
+                order: (column, { ascending = true } = {}) => {
+                    queryParams.set('order', `${column}.${ascending ? 'asc' : 'desc'}`);
+                    return builder;
+                },
+                insert: async (values) => {
+                    try {
+                        const res = await fetch(url, {
+                            method: 'POST',
+                            headers: headers,
+                            body: JSON.stringify(values)
+                        });
+                        if (!res.ok) return { data: null, error: await res.json() };
+                        return { data: await res.json(), error: null };
+                    } catch (err) {
+                        return { data: null, error: err };
+                    }
+                },
+                then: async (onfulfilled) => {
+                    try {
+                        const finalUrl = queryParams.toString() ? `${url}?${queryParams.toString()}` : url;
+                        const res = await fetch(finalUrl, { method: 'GET', headers: headers });
+                        if (!res.ok) return onfulfilled({ data: null, error: await res.json() });
+                        return onfulfilled({ data: await res.json(), error: null });
+                    } catch (err) {
+                        return onfulfilled({ data: null, error: err });
+                    }
+                }
+            };
+            return builder;
+        }
+    }
+
+    function createClient(supabaseUrl, supabaseKey, options) {
+        return new SupabaseClient(supabaseUrl, supabaseKey, options);
+    }
+
+    exports.SupabaseClient = SupabaseClient;
+    exports.createClient = createClient;
+
+    Object.defineProperty(exports, '__esModule', { value: true });
+
+}));
